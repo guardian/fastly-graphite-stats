@@ -1,0 +1,40 @@
+<configuration>
+
+    <contextName>ophan-tracker</contextName>
+
+    <appender name="APPLICATION_LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/application.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/application.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+
+		<encoder>
+			<pattern>%date [%thread] %-5level %logger{36} - %msg%n%xException{3}</pattern>
+		</encoder>
+    </appender>
+
+	<appender name="USER_ACTIVITY_LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/user-activity.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>logs/user-activity.log.%d{yyyy-MM-dd_HH}.gz</fileNamePattern>
+			<maxHistory>24</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- see http://logback.qos.ch/manual/configuration.html#overrridingCumulativity -->
+	<logger name="user_activity" level="INFO" additivity="false">
+		<appender-ref ref="USER_ACTIVITY_LOGFILE" />
+	</logger>
+
+    <root level="INFO">
+        <appender-ref ref="APPLICATION_LOGFILE"/>
+    </root>
+
+</configuration>

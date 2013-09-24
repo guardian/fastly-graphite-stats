@@ -1,0 +1,14 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET        /view                         controllers.StatsController.view(from: Option[String], to: Option[String])
+
+# manifest
+GET        /management/healthcheck        management.HealthcheckController.healthcheck
+GET        /management/manifest           management.ManifestController.manifest
+GET        /management/switch             management.Switches.switch(sendToGraphiteSwitch: Option[Boolean])
+
+# Map static resources from the /public folder to the /assets URL path
+GET        /assets/*file                  controllers.Assets.at(path="/public", file)
