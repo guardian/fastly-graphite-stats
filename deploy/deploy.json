@@ -1,0 +1,22 @@
+{
+    "packages": {
+        "fastly-stats": {
+            "type": "executable-jar-webapp",
+            "apps": ["mobile_apps::stats"],
+            "data": {
+                "port":"8080",
+                "healthcheck_paths":[
+                    "/management/healthcheck"
+                ]
+            }
+        }
+    },
+    "recipes": {
+        "default": {
+            "depends": ["deployOnly"]
+        },
+        "deployOnly": {
+            "actionsBeforeApp": ["fastly-stats.deploy"]
+        }
+    }
+}

@@ -10,7 +10,6 @@ logs/
 /tracker/dist/
 /dashboard/data
 /serf/data
-/deploy
 
 *.iml
 
