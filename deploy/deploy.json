@@ -1,6 +1,6 @@
 {
     "packages": {
-        "fastly-stats": {
+        "mobile-stats": {
             "type": "executable-jar-webapp",
             "apps": ["mobile_apps::stats"],
             "data": {
@@ -16,7 +16,7 @@
             "depends": ["deployOnly"]
         },
         "deployOnly": {
-            "actionsBeforeApp": ["fastly-stats.deploy"]
+            "actionsBeforeApp": ["mobile-stats.deploy"]
         }
     }
 }
