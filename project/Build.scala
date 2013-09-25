@@ -7,7 +7,7 @@ import scala.Some
 
 object ApplicationBuild extends Build {
 
-  val appName = "fastly-stats"
+  val appName = "mobile-stats"
   val appVersion = "1.0"
 
   val appDependencies = Seq(
@@ -16,7 +16,7 @@ object ApplicationBuild extends Build {
   )
 
   lazy val buildSettings = Defaults.defaultSettings ++ Seq(
-    jarName in assembly := "fastly-stats.jar",
+    jarName in assembly := "mobile-stats.jar",
     version := "0.1",
     organization := "com.gu",
     scalaVersion := "2.10.0"
