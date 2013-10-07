@@ -14,7 +14,7 @@ object StatsParser {
   }
 
   def toDateTime(dateString: String): DateTime = {
-    val fmt = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy")
+    val fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
     fmt.setTimeZone(DateTimeZone.UTC.toTimeZone)
     val parse: Date = fmt.parse(dateString.replace(" UTC", ""))
     new DateTime(parse)

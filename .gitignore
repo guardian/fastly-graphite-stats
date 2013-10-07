@@ -29,3 +29,5 @@ RUNNING_PID
 .classpath
 .settings
 .project
+
+/dist

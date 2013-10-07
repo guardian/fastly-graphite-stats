@@ -17,8 +17,7 @@ object GraphiteClient extends FetchingStats {
   def sendToGraphite = {
     if (management.Switches.sendToGraphiteSwitch) {
       val jsValue = fetch()
-      val fastlyStats = model.StatsParser.parse(jsValue)
-      GraphiteClient.send(fastlyStats)
+      send(model.StatsParser.parse(jsValue))
     } else {
       Logger.info("sendToGraphite switch is off")
     }
@@ -34,88 +33,82 @@ object GraphiteClient extends FetchingStats {
           val from = StatsParser.toDateTime(fs.meta.from)
           var minutes = 1
 
-          stats.foreach {
-            stat =>
-              val metricSecondsSinceEpoc = from.plusMinutes(minutes).getMillis / 1000
-              val serviceName = ServiceFilter.services(serviceId)
+          stats foreach { stat =>
+            val metricSecondsSinceEpoc = from.plusMinutes(minutes).getMillis / 1000
+            val serviceName = ServiceFilter.services(serviceId)
 
-              val requestMetricName = "fastly.%s.requests".format(serviceName)
-              graphiteClient.send(
-                requestMetricName,
-                stat.requests.toString,
-                metricSecondsSinceEpoc)
+            val requestMetricName = "fastly.%s.requests".format(serviceName)
+            graphiteClient.send(
+              requestMetricName,
+              stat.requests.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_1xx".format(serviceName),
-                stat.status_1xx.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_1xx".format(serviceName),
+              stat.status_1xx.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_2xx".format(serviceName),
-                stat.status_2xx.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_2xx".format(serviceName),
+              stat.status_2xx.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_3xx".format(serviceName),
-                stat.status_3xx.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_3xx".format(serviceName),
+              stat.status_3xx.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_301".format(serviceName),
-                stat.status_301.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_301".format(serviceName),
+              stat.status_301.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_302".format(serviceName),
-                stat.status_302.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_302".format(serviceName),
+              stat.status_302.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_4xx".format(serviceName),
-                stat.status_4xx.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_4xx".format(serviceName),
+              stat.status_4xx.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.http_5xx".format(serviceName),
-                stat.status_5xx.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.http_5xx".format(serviceName),
+              stat.status_5xx.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.bandwidth".format(serviceName),
-                stat.bandwidth.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.bandwidth".format(serviceName),
+              stat.bandwidth.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.hits".format(serviceName),
-                stat.hits.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.hits".format(serviceName),
+              stat.hits.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.miss".format(serviceName),
-                stat.miss.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.miss".format(serviceName),
+              stat.miss.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.pass".format(serviceName),
-                stat.pass.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.pass".format(serviceName),
+              stat.pass.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.hit_ratio".format(serviceName),
-                stat.hit_ratio.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.hits_time".format(serviceName),
+              stat.hits_time.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.hits_time".format(serviceName),
-                stat.hits_time.toString,
-                metricSecondsSinceEpoc)
+            graphiteClient.send(
+              "fastly.%s.miss_time".format(serviceName),
+              stat.miss_time.toString,
+              metricSecondsSinceEpoc)
 
-              graphiteClient.send(
-                "fastly.%s.miss_time".format(serviceName),
-                stat.miss_time.toString,
-                metricSecondsSinceEpoc)
-
-              minutes = minutes + 1
+            minutes = minutes + 1
           }
       }
 
