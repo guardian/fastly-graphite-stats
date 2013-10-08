@@ -3,14 +3,17 @@ package model
 import play.api.libs.json._
 
 object FastlyStatsFormats {
-  implicit val statsReader = Json.reads[Stats]
-  implicit val statsWriter = Json.writes[Stats]
+  implicit val stats = Json.format[Stats]
 
   implicit val meta = Json.format[Meta]
   implicit val fs = Json.format[FastlyStats]
+
+  implicit val sfs = Json.format[StatsForService]
 }
 
 case class FastlyStats(status: String, meta: Meta, msg: Option[String], data: Map[String, List[Stats]])
+
+case class StatsForService(status: String, meta: Meta, msg: Option[String], data: List[Stats])
 
 case class Meta(to: String, from: String, by: String, region: String)
 

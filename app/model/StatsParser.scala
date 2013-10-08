@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 object StatsParser {
-  def parse(jsValue: JsValue): FastlyStats = {
+  def parse(jsValue: JsValue): StatsForService = {
     import FastlyStatsFormats._
-    val stats: FastlyStats = jsValue.as[FastlyStats]
+    val stats = jsValue.as[StatsForService]
     LastUpdated.lastUpdated = toDateTime(stats.meta.to)
     stats
   }

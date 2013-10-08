@@ -11,7 +11,7 @@ object ApplicationBuild extends Build {
   val appVersion = "1.0"
 
   val appDependencies = Seq(
-    "com.gu" %% "fastlyapiclient" % "0.3.0",
+    "com.gu" %% "fastly-api-client" % "0.1.3",
     "com.codahale.metrics" % "metrics-graphite" % "3.0.0"
   )
 
