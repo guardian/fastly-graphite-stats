@@ -3,6 +3,7 @@ package conf
 import play.api.Play
 import lib.PlayConfig._
 import com.ning.http.client.ProxyServer
+import com.ning.http.client.ProxyServer.Protocol
 
 object Config {
   private val playConfig = Play.current.configuration
@@ -15,9 +16,10 @@ object Config {
 
   val proxyHost = playConfig.getString("proxy.host")
   val proxyPort = playConfig.getInt("proxy.port")
+  val proxyHttps = playConfig.getBoolean("proxy.https").getOrElse(false)
 
   val proxy = for {
     host <- proxyHost
     port <- proxyPort
-  } yield new ProxyServer(host, port)
+  } yield new ProxyServer(if (proxyHttps) Protocol.HTTPS else Protocol.HTTP, host, port)
 }
