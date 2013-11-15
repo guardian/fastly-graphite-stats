@@ -17,6 +17,8 @@ object Config {
   val proxyHost = playConfig.getString("proxy.host")
   val proxyPort = playConfig.getInt("proxy.port")
   val proxyHttps = playConfig.getBoolean("proxy.https").getOrElse(false)
+  
+  val acceptableDurationInMinsWithNoStats = playConfig.getInt("healthcheck.duration").getOrElse(5)
 
   val proxy = for {
     host <- proxyHost
