@@ -18,9 +18,14 @@ object Global extends GlobalSettings {
     }
 
     Akka.system.scheduler.schedule(0 seconds, 60 seconds) {
-      Logger.info("Sending stats to Graphite")
-      GraphiteClient.sendToGraphite
-      Logger.info("Finished sending stats to Graphite")
+      try {
+        Logger.info("Sending stats to Graphite")
+        GraphiteClient.sendToGraphite
+      } catch {
+        case e: Throwable => Logger.error("Exception sending stats", e)
+      } finally {
+        Logger.info("Finished sending stats to Graphite")
+      }
     }
   }
 }
