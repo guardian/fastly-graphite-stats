@@ -19,7 +19,10 @@ trait FetchingStats extends FastlyClient {
 
     (for {
       serviceId <- ServiceFilter.serviceIds
-    } yield serviceId -> StatsParser.parse(Json.parse(
-      client.statsForService(from = f, to = t, by = By.minute, serviceId = serviceId).get.getResponseBody))).toMap
+    } yield {
+      val responseBody = client.statsForService(from = f, to = t, by = By.minute, serviceId = serviceId).get.getResponseBody
+      Logger.debug(s"Received response body: $responseBody")
+      val json = Json.parse(responseBody)
+      serviceId -> StatsParser.parse(json)}).toMap
   }
 }
